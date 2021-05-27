@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export function Page404() {
     return (
@@ -16,9 +17,9 @@ export function Page404() {
                 We suggest that you return to home page.
               </p>
               {/* Button */}
-              <a className="btn btn-dark" href="index.html">
+              <NavLink className="btn btn-dark" to="/">
                 Go to Homepage
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>

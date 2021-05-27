@@ -1,6 +1,6 @@
 export * from './home';
 export * from './about';
-export * from './auth';
+export * from './login';
 export * from './blog';
 export * from './blog-post';
 export * from './checkout';

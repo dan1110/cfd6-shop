@@ -1,36 +1,40 @@
 import React from 'react';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 
 export function Sidebar() {
+	const { path } = useRouteMatch();
 	return (
 		<div className="col-12 col-md-3">
 			{/* Nav */}
 			<nav className="mb-10 mb-md-0">
 				<div className="list-group list-group-sm list-group-strong list-group-flush-x">
-					<a className="list-group-item list-group-item-action dropright-toggle " href="account-orders.html">
+					<NavLink className="list-group-item list-group-item-action dropright-toggle" to={`${path}`}>
 						Orders
-					</a>
-					<a
+					</NavLink>
+					<NavLink
 						className="list-group-item list-group-item-action dropright-toggle "
-						href="account-wishlist.html"
+						to={`${path}/wishlist`}
 					>
 						Widhlist
-					</a>
-					<a
+					</NavLink>
+					<NavLink
 						className="list-group-item list-group-item-action dropright-toggle "
-						href="account-personal-info.html"
+						to={`${path}/personal-info`}
 					>
 						Personal Info
-					</a>
+					</NavLink>
 					<NavLink
-						to={`${path}/addresses`}
-						className="list-group-item list-group-item-action dropright-toggle active"
-						href="account-address.html"
+						to={`${path}/address`}
+						className="list-group-item list-group-item-action dropright-toggle"
 					>
 						Addresses
 					</NavLink>
-					<a className="list-group-item list-group-item-action dropright-toggle " href="account-payment.html">
+					<NavLink
+						className="list-group-item list-group-item-action dropright-toggle "
+						to={`${path}/payment`}
+					>
 						Payment Methods
-					</a>
+					</NavLink>
 					<a className="list-group-item list-group-item-action dropright-toggle" href="#!">
 						Logout
 					</a>

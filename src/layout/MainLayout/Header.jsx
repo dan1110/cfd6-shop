@@ -1,4 +1,8 @@
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+
 export const Header = () => {
+	let {login, data} = useSelector((state) => state.auth);
 	return (
 		<div>
 			<div className="navbar navbar-topbar navbar-expand-xl navbar-light bg-light">
@@ -126,9 +130,9 @@ export const Header = () => {
 			<nav className="navbar navbar-expand-lg navbar-light bg-white">
 				<div className="container">
 					{/* Brand */}
-					<a className="navbar-brand" href="./overview.html">
+					<NavLink className="navbar-brand" to="/">
 						Shopper.
-					</a>
+					</NavLink>
 					{/* Toggler */}
 					<button
 						className="navbar-toggler"
@@ -147,23 +151,15 @@ export const Header = () => {
 						<ul className="navbar-nav mx-auto">
 							<li className="nav-item dropdown">
 								{/* Toggle */}
-								<a className="nav-link" data-toggle="dropdown" href="#">
+								<NavLink className="nav-link" data-toggle="dropdown" to="/">
 									Home
-								</a>
-								
-							</li>
-							<li className="nav-item dropdown position-static">
-								{/* Toggle */}
-								<a className="nav-link" data-toggle="dropdown" href="#">
-									Catalog
-								</a>
+								</NavLink>
 							</li>
 							<li className="nav-item dropdown">
 								{/* Toggle */}
-								<a className="nav-link" data-toggle="dropdown" href="#">
+								<NavLink className="nav-link" data-toggle="dropdown" to="/shops">
 									Shop
-								</a>
-								
+								</NavLink>
 							</li>
 							<li className="nav-item dropdown">
 								{/* Toggle */}
@@ -173,9 +169,9 @@ export const Header = () => {
 							</li>
 							<li className="nav-item dropdown">
 								{/* Toggle */}
-								<a className="nav-link" data-toggle="dropdown" href="#">
+								<NavLink className="nav-link" data-toggle="dropdown" to="/blog">
 									Blog
-								</a>
+								</NavLink>
 							</li>
 							<li className="nav-item">
 								<a className="nav-link" href="docs/getting-started.html">
@@ -191,9 +187,13 @@ export const Header = () => {
 								</a>
 							</li>
 							<li className="nav-item ml-lg-n4">
-								<a className="nav-link" href="./account-orders.html">
-									<i className="fe fe-user" />
-								</a>
+								{login ? (
+									<a className="nav-link" href="./account-orders.html">
+										<i className="fe fe-user" />
+									</a>
+								) : (
+									data?.username
+								)}
 							</li>
 							<li className="nav-item ml-lg-n4">
 								<a className="nav-link" href="./account-wishlist.html">
