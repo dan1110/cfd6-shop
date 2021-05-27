@@ -1,9 +1,9 @@
-import { LOGIN} from './../type';
+import { LOGIN, ERROR } from './../type';
 const initialState = {
 	// login: false,
 	login: JSON.parse(localStorage.getItem('login')) || false,
 	data: JSON.parse(localStorage.getItem('data')),
-	// loginErr: '',
+	loginErr: '',
 	// successCourse: '',
 	// home: '',
 };
@@ -16,9 +16,14 @@ export default function AuthReducer(state = initialState, action) {
 
 			return {
 				...state,
-				// login: true,
 				login: true,
 				data: action.payload,
+			};
+		}
+		case ERROR: {
+			return {
+				...state,
+				loginErr: action.payload,
 			};
 		}
 		// case LOGOUT: {
@@ -52,12 +57,7 @@ export default function AuthReducer(state = initialState, action) {
 		// 		home: action.payload,
 		// 	};
 		// }
-		// case ERROR: {
-		// 	return {
-		// 		...state,
-		// 		loginErr: action.payload,
-		// 	};
-		// }
+
 		default:
 			break;
 	}

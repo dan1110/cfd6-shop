@@ -1,19 +1,19 @@
-// import { SUBMIT_LOGIN, LOGOUT } from '../type';
+import authApi from '../../services/authApi';
+import { LOGIN, ERROR } from '../type';
 
-// export function loginAction(data) {
-// 	return {
-// 		type: SUBMIT_LOGIN,
-// 		payload: data,
-// 	};
-// }
-// export function logoutAction() {
-// 	return {
-// 		type: LOGOUT,
-// 	};
-// }
-// export function updateInfoAction(data) {
-// 	return {
-// 		type: LOGOUT,
-//         payload: data
-// 	};
-// }
+export function loginAction(form) {
+	return async (dispatch) => {
+		let res = await authApi.makeLogin(form);
+		if (res?.data) {
+			dispatch({
+				type: LOGIN,
+				payload: res.data,
+			});
+		} else if (res?.error) {
+			dispatch({
+				type: ERROR,
+				payload: res.data,
+			});
+		}
+	};
+}

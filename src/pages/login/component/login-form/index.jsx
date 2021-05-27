@@ -1,15 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router';
 import useFormValidate from '../../../../hook/useFormValidate';
-import { LOGIN } from '../../../../redux/type';
-import authApi from '../../../../services/authApi';
-
+import { loginAction } from '../../../../redux/actions/authAction';
 export function LoginForm() {
-	let { login } = useSelector((state) => state.auth);
-	console.log(login);
-
-	let dispatch = useDispatch();
+	let { loginErr } = useSelector((store) => store.auth);
 	let { form, error, inputChange, check } = useFormValidate(
 		{
 			username: '',
@@ -38,22 +32,15 @@ export function LoginForm() {
 			},
 		}
 	);
+	let dispatch = useDispatch();
 
-	async function onSubmitLogin(e) {
+	function onSubmitLogin(e) {
 		e.preventDefault();
 		let inputError = check();
 		if (Object.keys(inputError).length === 0) {
-			let res = await authApi.makeLogin(form);
-			if (res?.data) {
-				dispatch({
-					type: LOGIN,
-					payload: res.data,
-				});
-			}
+			dispatch(loginAction(form));
 		}
 	}
-
-	if (login) return <Redirect path="/account" />;
 
 	return (
 		<div className="col-12 col-md-6">
@@ -101,6 +88,7 @@ export function LoginForm() {
 									{error.password && <span className="error-text">{error.password}</span>}
 								</div>
 							</div>
+							{loginErr && <p className="text-error">{loginErr}</p>}
 							<div className="col-12 col-md">
 								{/* Remember */}
 								<div className="form-group">

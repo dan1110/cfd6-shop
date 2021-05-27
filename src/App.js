@@ -21,7 +21,7 @@ import {
 	StoreLocator,
 } from './pages';
 import './assets/custom.scss';
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './core/PrivateRoute';
 
 function App() {
 	return (
