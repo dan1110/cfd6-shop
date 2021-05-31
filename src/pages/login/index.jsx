@@ -4,11 +4,9 @@ import { Redirect } from 'react-router';
 import { LoginForm, NewCustomer } from './component';
 
 export function Login() {
-	let { login } = useSelector((state) => state.auth);
+	let { login } = useSelector((store) => store.auth);
 
-	if (login) {
-		<Redirect to="/account" />;
-	}
+	if (login) return <Redirect to="/account" />;
 	return (
 		<section className="py-12">
 			<div className="container">

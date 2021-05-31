@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useFormValidate from '../../../../hook/useFormValidate';
 import { loginAction } from '../../../../redux/actions/authAction';
 export function LoginForm() {
-	let { loginErr } = useSelector((store) => store.auth);
+	let { loginErr } = useSelector((state) => state.auth);
 	let { form, error, inputChange, check } = useFormValidate(
 		{
 			username: '',
@@ -39,6 +39,7 @@ export function LoginForm() {
 		let inputError = check();
 		if (Object.keys(inputError).length === 0) {
 			dispatch(loginAction(form));
+			console.log(loginErr?.error);
 		}
 	}
 
@@ -52,6 +53,7 @@ export function LoginForm() {
 					{/* Form */}
 					<form>
 						<div className="row">
+							{loginErr && <p className="error-text">{loginErr}</p>}
 							<div className="col-12">
 								{/* Email */}
 								<div className="form-group">
@@ -88,7 +90,6 @@ export function LoginForm() {
 									{error.password && <span className="error-text">{error.password}</span>}
 								</div>
 							</div>
-							{loginErr && <p className="text-error">{loginErr}</p>}
 							<div className="col-12 col-md">
 								{/* Remember */}
 								<div className="form-group">

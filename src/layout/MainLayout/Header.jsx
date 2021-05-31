@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export const Header = () => {
-	let {login, data} = useSelector((state) => state.auth);
+	let { login, data } = useSelector((state) => state.auth);
 	return (
 		<div>
 			<div className="navbar navbar-topbar navbar-expand-xl navbar-light bg-light">
@@ -187,13 +187,11 @@ export const Header = () => {
 								</a>
 							</li>
 							<li className="nav-item ml-lg-n4">
-								{login ? (
-									<a className="nav-link" href="./account-orders.html">
-										<i className="fe fe-user" />
-									</a>
-								) : (
-									data?.username
-								)}
+								<Link to="/login" className="nav-link">
+									{login
+									 ? <i className="fas fa-info"></i> 
+									 : <i className="fe fe-user" />}
+								</Link>
 							</li>
 							<li className="nav-item ml-lg-n4">
 								<a className="nav-link" href="./account-wishlist.html">

@@ -14,7 +14,6 @@ import {
 } from './component';
 
 export function Account() {
-	let { path } = useRouteMatch();
 	let { login } = useSelector((state) => state.auth);
 
 	if (!login) return <Redirect to="/login" />;
@@ -31,14 +30,14 @@ export function Account() {
 				<div className="row">
 					<Sidebar />
 					<Switch>
-						<Route path={`${path}/address`} component={Address} />
-						<Route path={`${path}/address-edit`} component={AddressEdit} />
-						<Route path={`${path}/order`} component={Order} />
-						<Route path={`${path}/orders`} component={Orders} />
-						<Route path={`${path}/payment`} component={Payment} />
-						<Route path={`${path}/payment-edit`} component={PaymentEdit} />
-						<Route path="/" component={PersonalInfo} />
-						<Route path={`${path}/wishlist`} component={WishList} />
+						<Route path="/account/address" component={Address} />
+						<Route path="/account/address/address-edit" component={AddressEdit} />
+						<Route path="/account/order" component={Order} />
+						<Route path="/account/orders" component={Orders} />
+						<Route path="/account/payment" component={Payment} />
+						<Route path="/account/payment/payment-edit" component={PaymentEdit} />
+						<Route path="/account" component={PersonalInfo} />
+						<Route path="/account/wishlist" component={WishList} />
 					</Switch>
 				</div>
 			</div>

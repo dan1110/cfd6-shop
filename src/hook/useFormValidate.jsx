@@ -11,10 +11,15 @@ let emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
 export default function useFormValidate(initialForm, validate) {
 	let [form, setForm] = useState(initialForm);
 	let [error, setError] = useState({});
+	var checkPass = '';
 
 	function inputChange(e) {
 		let name = e.target.name;
 		let value = e.target.value;
+
+		if (e.target.type === 'radio') {
+			value = e.target.checked;
+		}
 
 		setForm({
 			...form,
@@ -47,11 +52,22 @@ export default function useFormValidate(initialForm, validate) {
 					errorInput[i] = m?.pattern || `Vui lòng nhập đúng định dạng`;
 				}
 			}
+			if (r.check === 'password') {
+				checkPass = form[i];
+			}
+			if (r.confirmPassword) {
+				console.log(`form[i]`, form[i]);
+				console.log(checkPass);
+
+				if (checkPass !== form[i]) {
+					errorInput[i] = 'Nhập lại mật khẩu không đúng!';
+				}
+			}
 		}
-		
+
 		setError(errorInput);
 		return error;
 	}
 
-return { form, error, setForm, inputChange, check };
+	return { form, error, setForm, inputChange, check };
 }

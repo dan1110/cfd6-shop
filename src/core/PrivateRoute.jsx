@@ -3,15 +3,12 @@ import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
 export default function PrivateRoute(props) {
-	let { login } = useSelector((state) => state);
+	let { login } = useSelector((state) => state.auth);
 
 	if (!login) {
-		// setTimeout(() => {
-		// 	document.querySelector('.res').style.display = 'flex';
-		// }, 0);
 		return (
 			<Route>
-				<Redirect to="/" />;
+				<Redirect to="/login" />;
 			</Route>
 		);
 	}

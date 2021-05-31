@@ -1,6 +1,106 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import useFormValidate from '../../../../hook/useFormValidate';
+import { updateInfoAction } from '../../../../redux/actions/authAction';
 
 export function PersonalInfo() {
+	let { data } = useSelector((state) => state.auth);
+
+	let dispatch = useDispatch();
+
+	let birthday = '';
+	if (data?.birthday === null) {
+		birthday = '1/1/2000';
+	} else {
+		birthday = data?.birthday;
+	}
+	let [day, month, year] = birthday.split('/'); //dung split de cat chuoi
+
+	let [date, setDate] = useState({
+		day: day,
+		month: month,
+		year: year,
+	});
+
+	let { form, check, error, inputChange } = useFormValidate(
+		{
+			confirm: '',
+			first_name: '',
+			last_name: '',
+			confirmPassword: '',
+			email: '',
+			gender: 'male',
+		},
+		{
+			rule: {
+				first_name: {
+					required: true,
+					pattern: 'name',
+				},
+				last_name: {
+					required: true,
+					pattern: 'name',
+				},
+				confirm: {
+					required: true,
+					check: 'password',
+					// pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i,
+				},
+				confirmPassword: {
+					required: true,
+					confirmPassword: true,
+				},
+				email: {
+					required: true,
+					pattern: 'email',
+				},
+			},
+			message: {
+				email: {
+					required: 'Email không được bỏ trống',
+					pattern: 'Email không đúng định dạng',
+				},
+				confirm: {
+					required: 'Mật khẩu không được bỏ trống',
+					// pattern: 'Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái và một số',
+				},
+				confirmPassword: {
+					required: 'Mật khẩu không được bỏ trống',
+					pattern: 'Nhập lại mật khẩu không đúng!',
+				},
+			},
+		}
+	);
+
+	function handleSelected(e) {
+		let name = e.target.value;
+		setDate({
+			...date,
+			[name]: e.target.value,
+		});
+	}
+
+	function onSubmit(e) {
+		e.preventDefault();
+		let inputErr = check();
+
+		let sendBirthday = date.day + '/' + date.month + '/' + date.year;
+		if (Object.keys(inputErr).length === 0) {
+			dispatch(
+				updateInfoAction({
+					...form,
+					birthday: sendBirthday,
+				})
+			);
+		}
+		console.log('form', form);
+	}
+
+	let years = new Date().getFullYear();
+	// console.log(day);
+	// console.log(month);
+	// console.log(year);
+
 	return (
 		<div className="col-12 col-md-9 col-lg-8 offset-lg-1">
 			{/* Form */}
@@ -12,12 +112,12 @@ export function PersonalInfo() {
 							<label htmlFor="accountFirstName">First Name *</label>
 							<input
 								className="form-control form-control-sm"
-								id="accountFirstName"
+								name="first_name"
+								onChange={inputChange}
 								type="text"
-								placeholder="First Name *"
-								defaultValue="Daniel"
-								required
+								defaultValue={data?.first_name}
 							/>
+							{error.first_name && <p className="text-error">{error.first_name}</p>}
 						</div>
 					</div>
 					<div className="col-12 col-md-6">
@@ -26,12 +126,12 @@ export function PersonalInfo() {
 							<label htmlFor="accountLastName">Last Name *</label>
 							<input
 								className="form-control form-control-sm"
-								id="accountLastName"
+								name="last_name"
+								onChange={inputChange}
 								type="text"
-								placeholder="Last Name *"
-								defaultValue="Robinson"
-								required
+								defaultValue={data?.last_name}
 							/>
+							{error.last_name && <p className="text-error">{error.last_name}</p>}
 						</div>
 					</div>
 					<div className="col-12">
@@ -40,12 +140,12 @@ export function PersonalInfo() {
 							<label htmlFor="accountEmail">Email Address *</label>
 							<input
 								className="form-control form-control-sm"
-								id="accountEmail"
+								name="email"
+								onChange={inputChange}
 								type="email"
-								placeholder="Email Address *"
-								defaultValue="user@email.com"
-								required
+								defaultValue={data?.email}
 							/>
+							{error.email && <p className="text-error">{error.email}</p>}
 						</div>
 					</div>
 					<div className="col-12 col-md-6">
@@ -54,11 +154,13 @@ export function PersonalInfo() {
 							<label htmlFor="accountPassword">Current Password *</label>
 							<input
 								className="form-control form-control-sm"
-								id="accountPassword"
+								name="confirm"
+								onChange={inputChange}
 								type="password"
 								placeholder="Current Password *"
-								required
+								defaultValue={data?.confirmPassword}
 							/>
+							{error.password && <p className="text-error">{error.password}</p>}
 						</div>
 					</div>
 					<div className="col-12 col-md-6">
@@ -67,11 +169,12 @@ export function PersonalInfo() {
 							<label htmlFor="AccountNewPassword">New Password *</label>
 							<input
 								className="form-control form-control-sm"
-								id="AccountNewPassword"
+								name="newPassword"
+								onChange={inputChange}
 								type="password"
 								placeholder="New Password *"
-								required
 							/>
+							{error.confirm_password && <p className="text-error">{error.confirm_password}</p>}
 						</div>
 					</div>
 					<div className="col-12 col-lg-6">
@@ -86,10 +189,17 @@ export function PersonalInfo() {
 									<label className="sr-only" htmlFor="accountDate">
 										Date
 									</label>
-									<select className="custom-select custom-select-sm" id="accountDate">
-										<option>10</option>
-										<option>11</option>
-										<option selected>12</option>
+									<select
+										id="accountDate"
+										className="custom-select custom-select-sm"
+										name="day"
+										onChange={handleSelected}
+										value={date.day}
+									>
+										{console.log(data?.birthday)}
+										{[...Array(31)].map((e, i) => (
+											<option key={i}>{i + 1}</option>
+										))}
 									</select>
 								</div>
 								<div className="col">
@@ -97,10 +207,16 @@ export function PersonalInfo() {
 									<label className="sr-only" htmlFor="accountMonth">
 										Month
 									</label>
-									<select className="custom-select custom-select-sm" id="accountMonth">
-										<option>January</option>
-										<option selected>February</option>
-										<option>March</option>
+									<select
+										id="accountMonth"
+										className="custom-select custom-select-sm"
+										name="month"
+										onChange={handleSelected}
+										value={date.month}
+									>
+										{[...Array(12)].map((e, i) => (
+											<option key={i}>{i + 1}</option>
+										))}
 									</select>
 								</div>
 								<div className="col-auto">
@@ -108,10 +224,16 @@ export function PersonalInfo() {
 									<label className="sr-only" htmlFor="accountYear">
 										Year
 									</label>
-									<select className="custom-select custom-select-sm" id="accountYear">
-										<option>1990</option>
-										<option selected>1991</option>
-										<option>1992</option>
+									<select
+										id="accountYear"
+										className="custom-select custom-select-sm"
+										name="year"
+										onChange={handleSelected}
+										value={date.year}
+									>
+										{[...Array(100)].map((e, i) => (
+											<option key={years - i}>{years - i}</option>
+										))}
 									</select>
 								</div>
 							</div>
@@ -123,17 +245,31 @@ export function PersonalInfo() {
 							<label>Gender</label>
 							<div className="btn-group-toggle" data-toggle="buttons">
 								<label className="btn btn-sm btn-outline-border active">
-									<input type="radio" name="gender" defaultChecked /> Male
+									<input
+										type="radio"
+										name="gender"
+										value="male"
+										defaultChecked={form.gender === 'male'}
+										onClick={inputChange}
+									/>{' '}
+									Male
 								</label>
 								<label className="btn btn-sm btn-outline-border">
-									<input type="radio" name="gender" /> Female
+									<input
+										type="radio"
+										name="gender"
+										value="female"
+										defaultChecked={form.gender === 'female'}
+										onClick={inputChange}
+									/>{' '}
+									Female
 								</label>
 							</div>
 						</div>
 					</div>
 					<div className="col-12">
 						{/* Button */}
-						<button className="btn btn-dark" type="submit">
+						<button className="btn btn-dark" type="submit" onClick={onSubmit}>
 							Save Changes
 						</button>
 					</div>
