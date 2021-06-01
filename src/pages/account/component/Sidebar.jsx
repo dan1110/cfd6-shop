@@ -16,24 +16,26 @@ export function Sidebar() {
 			{/* Nav */}
 			<nav className="mb-10 mb-md-0">
 				<div className="list-group list-group-sm list-group-strong list-group-flush-x">
-					<NavLink className="list-group-item list-group-item-action dropright-toggle" to={`${path}/orders`}>
+					<NavLink className="list-group-item list-group-item-action dropright-toggle" to={`${path}/orders`} activeClassName="active">
 						Orders
 					</NavLink>
 					<NavLink
 						className="list-group-item list-group-item-action dropright-toggle "
+						activeClassName="active"
 						to={`${path}/wishlist`}
 					>
-						Widhlist
+						Wishlist
 					</NavLink>
-					<NavLink className="list-group-item list-group-item-action dropright-toggle " to={`${path}`}>
+					<NavLink className="list-group-item list-group-item-action dropright-toggle" to={`${path}`} activeClassName="active">
 						Personal Info
 					</NavLink>
-					<NavLink to={`${path}/address`} className="list-group-item list-group-item-action dropright-toggle">
+					<NavLink to={`${path}/address`} className="list-group-item list-group-item-action dropright-toggle" activeClassName="active">
 						Addresses
 					</NavLink>
 					<NavLink
 						className="list-group-item list-group-item-action dropright-toggle "
 						to={`${path}/payment`}
+						activeClassName="active"
 					>
 						Payment Methods
 					</NavLink>

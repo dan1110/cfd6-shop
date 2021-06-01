@@ -41,10 +41,15 @@ export function logoutAction() {
 		});
 	};
 }
-export function updateInfoAction() {
-	return (dispatch) => {
-		dispatch({
-			type: UPDATE_INFO,
-		});
+export function updateInfoAction(data) {
+	return async (dispatch) => {
+		let res = await authApi.updateInfo(data);
+		console.log(res);
+		if (res?.data) {
+			dispatch({
+				type: UPDATE_INFO,
+				payload: res.data,
+			});
+		}
 	};
 }

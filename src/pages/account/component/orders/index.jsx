@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 export function Orders() {
+	let { path } = useRouteMatch();
+
 	return (
 		<div className="col-12 col-md-9 col-lg-8 offset-lg-1">
 			{/* Order */}
@@ -84,9 +87,9 @@ export function Orders() {
 							<div className="form-row">
 								<div className="col-6">
 									{/* Button */}
-									<a className="btn btn-sm btn-block btn-outline-dark" href="account-order.html">
+									<Link className="btn btn-sm btn-block btn-outline-dark"  to={`${path}/detail`}>
 										Order Details
-									</a>
+									</Link>
 								</div>
 								<div className="col-6">
 									{/* Button */}

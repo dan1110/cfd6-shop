@@ -18,7 +18,7 @@ export default function useFormValidate(initialForm, validate) {
 		let value = e.target.value;
 
 		if (e.target.type === 'radio') {
-			value = e.target.checked;
+			value = e.target.value;
 		}
 
 		setForm({
@@ -27,14 +27,16 @@ export default function useFormValidate(initialForm, validate) {
 		});
 	}
 
-	function check() {
+	function check(option = { exclude: {} }) {
 		let errorInput = {};
+		let { exclude } = option;
 
 		let { rule, message } = validate;
 
 		for (let i in rule) {
 			let r = rule[i];
 			let m = message[i] || {};
+			if (i in exclude) continue;
 
 			if (r.required && !form[i]?.trim()) {
 				errorInput[i] = m?.required || 'Không được để trống';
@@ -56,9 +58,6 @@ export default function useFormValidate(initialForm, validate) {
 				checkPass = form[i];
 			}
 			if (r.confirmPassword) {
-				console.log(`form[i]`, form[i]);
-				console.log(checkPass);
-
 				if (checkPass !== form[i]) {
 					errorInput[i] = 'Nhập lại mật khẩu không đúng!';
 				}

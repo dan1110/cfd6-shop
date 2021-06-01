@@ -9,10 +9,10 @@ export function PersonalInfo() {
 	let dispatch = useDispatch();
 
 	let birthday = '';
-	if (data?.birthday === null) {
+	if (data.birthday === null) {
 		birthday = '1/1/2000';
 	} else {
-		birthday = data?.birthday;
+		birthday = data.birthday;
 	}
 	let [day, month, year] = birthday.split('/'); //dung split de cat chuoi
 
@@ -21,6 +21,13 @@ export function PersonalInfo() {
 		month: month,
 		year: year,
 	});
+
+	let [isFormChange, setIsFormChange] = useState('');
+
+	let formChange = {
+		firstName: data.first_name,
+		lastName: data.last_name,
+	};
 
 	let { form, check, error, inputChange } = useFormValidate(
 		{
@@ -73,7 +80,7 @@ export function PersonalInfo() {
 	);
 
 	function handleSelected(e) {
-		let name = e.target.value;
+		let name = e.target.name;
 		setDate({
 			...date,
 			[name]: e.target.value,
@@ -82,18 +89,33 @@ export function PersonalInfo() {
 
 	function onSubmit(e) {
 		e.preventDefault();
-		let inputErr = check();
+
+		let exclude = {};
+		if (!form.password) {
+			exclude = {
+				email: true,
+				password: true,
+				confirm_password: true,
+			};
+		}
+
+		let inputErr = check({ exclude });
 
 		let sendBirthday = date.day + '/' + date.month + '/' + date.year;
 		if (Object.keys(inputErr).length === 0) {
-			dispatch(
-				updateInfoAction({
-					...form,
-					birthday: sendBirthday,
-				})
-			);
+			if (formChange !== form.first_name || formChange !== form.last_name) {
+				dispatch(
+					updateInfoAction({
+						...form,
+						birthday: sendBirthday,
+					})
+				);
+				setIsFormChange('');
+			} else {
+				setIsFormChange('Vui lòng thay đổi thông tin!');
+			}
+			console.log('form', form);
 		}
-		console.log('form', form);
 	}
 
 	let years = new Date().getFullYear();
@@ -105,6 +127,7 @@ export function PersonalInfo() {
 		<div className="col-12 col-md-9 col-lg-8 offset-lg-1">
 			{/* Form */}
 			<form>
+				{isFormChange && <p className="error-text">{isFormChange}</p>}
 				<div className="row">
 					<div className="col-12 col-md-6">
 						{/* Email */}
@@ -115,9 +138,9 @@ export function PersonalInfo() {
 								name="first_name"
 								onChange={inputChange}
 								type="text"
-								defaultValue={data?.first_name}
+								value={data?.first_name}
 							/>
-							{error.first_name && <p className="text-error">{error.first_name}</p>}
+							{error.first_name && <p className="error-text">{error.first_name}</p>}
 						</div>
 					</div>
 					<div className="col-12 col-md-6">
@@ -129,9 +152,9 @@ export function PersonalInfo() {
 								name="last_name"
 								onChange={inputChange}
 								type="text"
-								defaultValue={data?.last_name}
+								value={data?.last_name}
 							/>
-							{error.last_name && <p className="text-error">{error.last_name}</p>}
+							{error.last_name && <p className="error-text">{error.last_name}</p>}
 						</div>
 					</div>
 					<div className="col-12">
@@ -143,9 +166,9 @@ export function PersonalInfo() {
 								name="email"
 								onChange={inputChange}
 								type="email"
-								defaultValue={data?.email}
+								value={data?.email}
+								readOnly="true"
 							/>
-							{error.email && <p className="text-error">{error.email}</p>}
 						</div>
 					</div>
 					<div className="col-12 col-md-6">
@@ -158,9 +181,9 @@ export function PersonalInfo() {
 								onChange={inputChange}
 								type="password"
 								placeholder="Current Password *"
-								defaultValue={data?.confirmPassword}
+								value={data?.confirmPassword}
 							/>
-							{error.password && <p className="text-error">{error.password}</p>}
+							{error.password && <p className="error-text">{error.password}</p>}
 						</div>
 					</div>
 					<div className="col-12 col-md-6">
@@ -174,7 +197,7 @@ export function PersonalInfo() {
 								type="password"
 								placeholder="New Password *"
 							/>
-							{error.confirm_password && <p className="text-error">{error.confirm_password}</p>}
+							{error.confirm_password && <p className="error-text">{error.confirm_password}</p>}
 						</div>
 					</div>
 					<div className="col-12 col-lg-6">
@@ -196,7 +219,6 @@ export function PersonalInfo() {
 										onChange={handleSelected}
 										value={date.day}
 									>
-										{console.log(data?.birthday)}
 										{[...Array(31)].map((e, i) => (
 											<option key={i}>{i + 1}</option>
 										))}

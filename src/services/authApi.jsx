@@ -1,7 +1,7 @@
 import { endpoint } from './config';
 const authApi = {
 	async refreshToken() {
-		let refreshToken = JSON.parse(localStorage.getItem('token'))?.refreshToken;
+		let refreshToken = JSON.parse(localStorage.getItem('data'))?.token?.refreshToken;
 		let res = await fetch(`${endpoint}/elearning/v4/refresh-token`, {
 			method: 'POST',
 			body: JSON.stringify({
@@ -35,28 +35,30 @@ const authApi = {
 		}).then((res) => res.json());
 	},
 	async updateInfo(data) {
-		let { accessToken } = localStorage.getItem('data').token;
+		let token = JSON.parse(localStorage.getItem('token'))?.accessToken;
 
 		let res = await fetch(`${endpoint}/update-profile`, {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${accessToken}`,
+				Authorization: `Bearer ${token}`,
 			},
 		});
 		if (res.status === 200) {
 			return res.json();
 		} else if (res.status === 403) {
+
 			await authApi.refreshToken();
-			let { accessToken } = localStorage.getItem('data').token;
+
+			let token = JSON.parse(localStorage.getItem('token'))?.accessToken;
 
 			return fetch(`${endpoint}/update-profile`, {
 				method: 'POST',
 				body: JSON.stringify(data),
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${accessToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			}).then((res) => res.json());
 		}

@@ -30,10 +30,10 @@ export function Account() {
 				<div className="row">
 					<Sidebar />
 					<Switch>
-						<Route path="/account/address" component={Address} />
-						<Route path="/account/address/address-edit" component={AddressEdit} />
-						<Route path="/account/order" component={Order} />
-						<Route path="/account/orders" component={Orders} />
+						<Route path="/account/address" exact component={Address} />
+						<Route path="/account/address/edit" component={AddressEdit} />
+						<Route path="/account/orders/detail" component={Order} />
+						<Route path="/account/orders" exact component={Orders} />
 						<Route path="/account/payment" component={Payment} />
 						<Route path="/account/payment/payment-edit" component={PaymentEdit} />
 						<Route path="/account" component={PersonalInfo} />

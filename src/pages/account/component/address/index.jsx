@@ -69,7 +69,7 @@ export function Address() {
 				</div>
 				<div className="col-12">
 					{/* Button */}
-					<NavLink className="btn btn-block btn-lg btn-outline-border" to={`${path}/address-edit`}>
+					<NavLink className="btn btn-block btn-lg btn-outline-border" to={`${path}/edit`}>
 						Add Address <i className="fe fe-plus" />
 					</NavLink>
 				</div>
