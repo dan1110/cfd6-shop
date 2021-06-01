@@ -36,7 +36,7 @@ export function Account() {
 						<Route path="/account/orders" exact component={Orders} />
 						<Route path="/account/payment" component={Payment} />
 						<Route path="/account/payment/payment-edit" component={PaymentEdit} />
-						<Route path="/account" component={PersonalInfo} />
+						<Route path="/account" exact component={PersonalInfo} />
 						<Route path="/account/wishlist" component={WishList} />
 					</Switch>
 				</div>
