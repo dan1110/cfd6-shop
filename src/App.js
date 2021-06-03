@@ -22,12 +22,14 @@ import {
 } from './pages';
 import './assets/custom.scss';
 import PrivateRoute from './core/PrivateRoute';
+import { routerConfig } from './core/routerConfig';
+import routers from './routers';
 
 function App() {
 	return (
 		<Provider store={store}>
 			<BrowserRouter>
-				<MainLayout>
+				{/* <MainLayout>
 					<Switch>
 						<Route exact path="/" component={HomePage} />
 						<Route path="/products" component={ProductPage} />
@@ -46,7 +48,8 @@ function App() {
 						<Route path="/store-locator" component={StoreLocator} />
 						<Route component={Page404} />
 					</Switch>
-				</MainLayout>
+				</MainLayout> */}
+				{routerConfig(routers)}
 			</BrowserRouter>
 		</Provider>
 	);

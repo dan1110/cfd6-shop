@@ -26,7 +26,7 @@ export function Sidebar() {
 					>
 						Wishlist
 					</NavLink>
-					<NavLink className="list-group-item list-group-item-action dropright-toggle" to={`${path}`} activeClassName="active">
+					<NavLink exact className="list-group-item list-group-item-action dropright-toggle" to={`${path}`} activeClassName="active">
 						Personal Info
 					</NavLink>
 					<NavLink to={`${path}/address`} className="list-group-item list-group-item-action dropright-toggle" activeClassName="active">
