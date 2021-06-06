@@ -1,7 +1,8 @@
 import { CATEGORIES, GET_PRODUCT } from './../type';
 const initialState = {
 	categories: JSON.parse(localStorage.getItem('categories')) || {},
-	product: '',
+	product: [],
+	paginate: [],
 };
 
 export default function ProductReducer(state = initialState, action) {
@@ -16,7 +17,8 @@ export default function ProductReducer(state = initialState, action) {
 		case GET_PRODUCT: {
 			return {
 				...state,
-				product: action.payload,
+				product: action.payload.data,
+				paginate: action.payload.paginate,
 			};
 		}
 		default:

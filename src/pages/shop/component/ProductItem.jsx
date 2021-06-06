@@ -1,6 +1,10 @@
 import React from 'react';
+import { currency } from '../../../utils';
 
-export function ProductItem() {
+export function ProductItem({ name, images, price, rating_average, loading, discount_rate, slug, thumbnail_url }) {
+	let image1 = images?.[0]?.medium_url;
+	let image2 = images?.[0]?.medium_url;
+
 	return (
 		<div className="col-6 col-md-4">
 			{/* Card */}
@@ -11,8 +15,8 @@ export function ProductItem() {
 				<div className="card-img">
 					{/* Image */}
 					<a className="card-img-hover" href="product.html">
-						<img className="card-img-top card-img-back" src="/img/products/product-120.jpg" alt="..." />
-						<img className="card-img-top card-img-front" src="/img/products/product-5.jpg" alt="..." />
+						<img className="card-img-top card-img-back" src={thumbnail_url} alt="..." />
+						<img className="card-img-top card-img-front" src={thumbnail_url} alt="..." />
 					</a>
 					{/* Actions */}
 					<div className="card-actions">
@@ -48,11 +52,28 @@ export function ProductItem() {
 					{/* Title */}
 					<div className="font-weight-bold">
 						<a className="text-body" href="product.html">
-							Leather mid-heel Sandals
+							{name}
 						</a>
 					</div>
+					<div class="rating font-size-sm text-dark" data-value={rating_average}>
+						<div class="rating-item">
+							<i class="fas fa-star"></i>
+						</div>
+						<div class="rating-item">
+							<i class="fas fa-star"></i>
+						</div>
+						<div class="rating-item">
+							<i class="fas fa-star"></i>
+						</div>
+						<div class="rating-item">
+							<i class="fas fa-star"></i>
+						</div>
+						<div class="rating-item">
+							<i class="fas fa-star"></i>
+						</div>
+					</div>
 					{/* Price */}
-					<div className="font-weight-bold text-muted">$129.00</div>
+					<div className="font-weight-bold text-muted">{currency(price)}</div>
 				</div>
 			</div>
 		</div>

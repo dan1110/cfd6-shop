@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { getCategoriesAction } from '../../../redux/actions/productAction';
 import productApi from '../../../services/productApi';
+import { convertStrToQuery, convertToQueryToStr } from '../../../utils';
 
 export function Sidebar() {
 	let { categories } = useSelector((state) => state.product);
@@ -38,7 +39,15 @@ export function Sidebar() {
 									</li>
 									{categories.map((item) => (
 										<li className="list-styled-item">
-											<Link className="list-styled-link">{item.title}</Link>
+											<Link
+												className="list-styled-link"
+												to={`/product?${convertStrToQuery({
+													...convertToQueryToStr(),
+													categories: item?.id,
+												})}`}
+											>
+												{item.title}
+											</Link>
 										</li>
 									))}
 								</ul>

@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
+let $ = window.$;
 export function Slider() {
+
+	let ref = useRef();
+	
+	useEffect(() => {
+		$(ref.current).flickity({
+			pageDots: true,
+		});
+	}, []);
+
 	return (
-		<div className="flickity-page-dots-inner mb-9" data-flickity='{"pageDots": true}'>
+		<div ref={ref} className="flickity-page-dots-inner mb-9" data-flickity='{"pageDots": true}'>
 			{/* Item */}
 			<div className="w-100">
 				<div className="card bg-h-100 bg-left" style={{ backgroundImage: 'url(/img/covers/cover-24.jpg)' }}>

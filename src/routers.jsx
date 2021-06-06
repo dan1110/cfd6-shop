@@ -19,6 +19,11 @@ import {
 } from './pages';
 let routers = [
 	{
+		component: ComingSoon,
+		path: '/coming-soon',
+		exact: true,
+	},
+	{
 		component: MainLayout,
 		path: '/',
 		routers: [
@@ -52,11 +57,7 @@ let routers = [
 				path: '/blog-post',
 				exact: true,
 			},
-			{
-				component: ComingSoon,
-				path: '/coming-soon',
-				exact: true,
-			},
+
 			{
 				component: ContactUs,
 				path: '/contact-us',
@@ -72,14 +73,10 @@ let routers = [
 				path: '/order-completed',
 				exact: true,
 			},
-			{
-				component: Page404,
-				path: '/page404',
-				exact: true,
-			},
+
 			{
 				component: ProductPage,
-				path: '/products',
+				path: '/product-detail',
 				exact: true,
 			},
 			{
@@ -89,7 +86,7 @@ let routers = [
 			},
 			{
 				component: ShopPage,
-				path: '/shops',
+				path: '/product',
 				exact: true,
 			},
 			{
@@ -100,6 +97,11 @@ let routers = [
 			{
 				component: StoreLocator,
 				path: '/store-locator',
+				exact: true,
+			},
+			{
+				component: Page404,
+				path: '/page404',
 				exact: true,
 			},
 		],

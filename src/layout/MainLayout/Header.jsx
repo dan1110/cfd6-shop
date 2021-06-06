@@ -130,9 +130,9 @@ export const Header = () => {
 			<nav className="navbar navbar-expand-lg navbar-light bg-white">
 				<div className="container">
 					{/* Brand */}
-					<NavLink className="navbar-brand" to="/">
+					<Link className="navbar-brand" to="/">
 						Shopper.
-					</NavLink>
+					</Link>
 					{/* Toggler */}
 					<button
 						className="navbar-toggler"
@@ -151,27 +151,27 @@ export const Header = () => {
 						<ul className="navbar-nav mx-auto">
 							<li className="nav-item dropdown">
 								{/* Toggle */}
-								<NavLink className="nav-link" data-toggle="dropdown" to="/">
+								<Link className="nav-link" to="/">
 									Home
-								</NavLink>
+								</Link>
 							</li>
 							<li className="nav-item dropdown">
 								{/* Toggle */}
-								<NavLink className="nav-link" data-toggle="dropdown" to="/shops">
+								<Link className="nav-link" to="/product">
 									Shop
-								</NavLink>
+								</Link>
 							</li>
 							<li className="nav-item dropdown">
 								{/* Toggle */}
-								<a className="nav-link" data-toggle="dropdown" href="#">
+								<a className="nav-link" href="#">
 									Pages
 								</a>
 							</li>
 							<li className="nav-item dropdown">
 								{/* Toggle */}
-								<NavLink className="nav-link" data-toggle="dropdown" to="/blog">
+								<Link className="nav-link" data-toggle="dropdown" to="/blog">
 									Blog
-								</NavLink>
+								</Link>
 							</li>
 							<li className="nav-item">
 								<a className="nav-link" href="docs/getting-started.html">

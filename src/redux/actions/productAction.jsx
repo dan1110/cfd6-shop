@@ -12,9 +12,9 @@ export function getCategoriesAction() {
 		}
 	};
 }
-export function getProductAction() {
+export function getProductAction(pageParam) {
 	return async (dispatch) => {
-		let res = await productApi.getProduct();
+		let res = await productApi.getProduct(pageParam);
 		if (res) {
 			dispatch({
 				type: GET_PRODUCT,
