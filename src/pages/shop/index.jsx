@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductAction } from '../../redux/actions/productAction';
+import { SET_LOADING } from '../../redux/type';
 import { convertStrToQuery, convertToQueryToStr } from '../../utils';
 import { Products, Sidebar } from './component';
 
@@ -11,6 +12,9 @@ export function ShopPage() {
 	let pageParam = convertStrToQuery(url);
 
 	useEffect(() => {
+		dispatch({
+			type: SET_LOADING,
+		});
 		dispatch(getProductAction(pageParam));
 	}, [pageParam]);
 

@@ -6,4 +6,4 @@ export const RESGISTER_ERROR = 'RESGISTER_ERROR';
 export const UPDATE_INFO = 'UPDATE_INFO';
 export const CATEGORIES = 'CATEGORIES';
 export const GET_PRODUCT = 'GET_PRODUCT';
-// export const HOME = 'HOME';
+export const SET_LOADING = 'SET_LOADING';

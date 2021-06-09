@@ -1,10 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { currency } from '../../../utils';
 
-export function ProductItem({ name, images, price, rating_average, loading, discount_rate, slug, thumbnail_url }) {
+export function ProductItem({ name, images, price, rating_average, discount_rate, slug, thumbnail_url }) {
 	let image1 = images?.[0]?.medium_url;
 	let image2 = images?.[0]?.medium_url;
 
+	let { loading } = useSelector((state) => state.product);
+	console.log(loading);
 	return (
 		<div className="col-6 col-md-4">
 			{/* Card */}

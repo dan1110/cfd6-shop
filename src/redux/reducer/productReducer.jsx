@@ -1,8 +1,9 @@
-import { CATEGORIES, GET_PRODUCT } from './../type';
+import { CATEGORIES, GET_PRODUCT, SET_LOADING } from './../type';
 const initialState = {
 	categories: JSON.parse(localStorage.getItem('categories')) || {},
 	product: [],
 	paginate: [],
+	loading: false,
 };
 
 export default function ProductReducer(state = initialState, action) {
@@ -12,6 +13,12 @@ export default function ProductReducer(state = initialState, action) {
 			return {
 				...state,
 				categories: action.payload,
+			};
+		}
+		case SET_LOADING: {
+			return {
+				...state,
+				loading: true,
 			};
 		}
 		case GET_PRODUCT: {
