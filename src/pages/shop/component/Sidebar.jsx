@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { getCategoriesAction } from '../../../redux/actions/productAction';
+import { GET_NAME_CATOGORY } from '../../../redux/type';
 import productApi from '../../../services/productApi';
 import { convertStrToQuery, convertToQueryToStr } from '../../../utils';
 
@@ -13,6 +14,18 @@ export function Sidebar() {
 	useEffect(() => {
 		dispatch(getCategoriesAction());
 	}, []);
+
+	let obj = convertToQueryToStr();
+	// delete obj.page;
+
+	// console.log(obj);
+
+	const hanldeClickItemCategori = (item) => {
+		dispatch({
+			type: GET_NAME_CATOGORY,
+			payload: item,
+		});
+	};
 
 	return (
 		<div className="col-12 col-md-4 col-lg-3">
@@ -42,9 +55,10 @@ export function Sidebar() {
 											<Link
 												className="list-styled-link"
 												to={`/product?${convertStrToQuery({
-													...convertToQueryToStr(),
+													...obj,
 													categories: item?.id,
 												})}`}
+												onClick={() => hanldeClickItemCategori(item)}
 											>
 												{item.title}
 											</Link>

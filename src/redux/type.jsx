@@ -7,3 +7,4 @@ export const UPDATE_INFO = 'UPDATE_INFO';
 export const CATEGORIES = 'CATEGORIES';
 export const GET_PRODUCT = 'GET_PRODUCT';
 export const SET_LOADING = 'SET_LOADING';
+export const GET_NAME_CATOGORY = 'GET_NAME_CATOGORY';

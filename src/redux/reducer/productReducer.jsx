@@ -1,9 +1,10 @@
-import { CATEGORIES, GET_PRODUCT, SET_LOADING } from './../type';
+import { CATEGORIES, GET_PRODUCT, SET_LOADING, GET_NAME_CATOGORY } from './../type';
 const initialState = {
 	categories: JSON.parse(localStorage.getItem('categories')) || {},
 	product: [],
 	paginate: [],
 	loading: false,
+	categoryName: [],
 };
 
 export default function ProductReducer(state = initialState, action) {
@@ -21,11 +22,18 @@ export default function ProductReducer(state = initialState, action) {
 				loading: true,
 			};
 		}
+		case GET_NAME_CATOGORY: {
+			return {
+				...state,
+				categoryName: action.payload,
+			};
+		}
 		case GET_PRODUCT: {
 			return {
 				...state,
 				product: action.payload.data,
 				paginate: action.payload.paginate,
+				loading: false,
 			};
 		}
 		default:

@@ -5,7 +5,7 @@ import { convertStrToQuery } from '../utils';
 
 export function Pagination() {
 	let { paginate } = useSelector((state) => state.product);
-	console.log(paginate);
+	// console.log(paginate);
 
 	let start = paginate.currentPage - 2;
 	if (start <= 0) {
