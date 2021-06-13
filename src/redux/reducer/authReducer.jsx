@@ -65,38 +65,6 @@ export default function AuthReducer(state = initialState, action) {
         data: action.payload,
       };
     }
-    // case LOGOUT: {
-    // 	localStorage.setItem('login', JSON.stringify(false));
-    // 	localStorage.setItem('data', JSON.stringify(null));
-    // 	localStorage.setItem('home', JSON.stringify(null));
-    // 	return {
-    // 		...state,
-    // 		login: false,
-    // 		data: null,
-    // 	};
-    // }
-
-    // case UPDATE_INFO: {
-    // 	localStorage.setItem('data', JSON.stringify(action.payload));
-    // 	return {
-    // 		...state,
-    // 		data: action.payload,
-    // 	};
-    // }
-    // case COURSE_REGISTER: {
-    // 	return {
-    // 		...state,
-    // 		successCourse: action.payload,
-    // 	};
-    // }
-    // case HOME: {
-    // 	// localStorage.setItem('home', JSON.stringify(action.payload));
-    // 	return {
-    // 		...state,
-    // 		home: action.payload,
-    // 	};
-    // }
-
     default:
       return state;
   }

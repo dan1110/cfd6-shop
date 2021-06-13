@@ -1,7 +1,7 @@
 export function currency(number) {
 	return new Intl.NumberFormat('vn').format(number) + ' vnđ';
 }
-export function convertToQueryToStr() {
+export function convertQueryToStr() {
 	var search = window.location.search.substring(1);
 
 	return !search

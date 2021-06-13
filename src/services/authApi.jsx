@@ -1,4 +1,6 @@
 import { endpoint } from './config';
+const axios = require('axios');
+
 const authApi = {
 	async refreshToken() {
 		let refreshToken = JSON.parse(localStorage.getItem('data'))?.token?.refreshToken;
@@ -17,13 +19,15 @@ const authApi = {
 		return true;
 	},
 	makeLogin(data) {
-		return fetch(`${endpoint}/login`, {
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		}).then((res) => res.json());
+		// return fetch(`${endpoint}/login`, {
+		// 	method: 'POST',
+		// 	body: JSON.stringify(data),
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 	},
+		// }).then((res) => res.json());
+
+		return axios.post(`${endpoint}/login`, data);
 	},
 	register(data) {
 		return fetch(`${endpoint}/register`, {
@@ -48,7 +52,6 @@ const authApi = {
 		if (res.status === 200) {
 			return res.json();
 		} else if (res.status === 403) {
-
 			await authApi.refreshToken();
 
 			let token = JSON.parse(localStorage.getItem('token'))?.accessToken;

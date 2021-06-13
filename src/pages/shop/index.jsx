@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductAction } from '../../redux/actions/productAction';
 import { SET_LOADING } from '../../redux/type';
-import { convertStrToQuery, convertToQueryToStr } from '../../utils';
+import { convertStrToQuery, convertQueryToStr } from '../../utils';
 import { Products, Sidebar } from './component';
 
 export function ShopPage() {
 	let dispatch = useDispatch();
 
-	let url = convertToQueryToStr();
+	let url = convertQueryToStr();
 	let pageParam = convertStrToQuery(url);
 
 	useEffect(() => {

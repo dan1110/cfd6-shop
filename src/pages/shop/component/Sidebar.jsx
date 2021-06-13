@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { getCategoriesAction } from "../../../redux/actions/productAction";
 import { GET_NAME_CATEGORY } from "../../../redux/type";
 import productApi from "../../../services/productApi";
-import { convertStrToQuery, convertToQueryToStr } from "../../../utils";
+import { convertStrToQuery, convertQueryToStr } from "../../../utils";
 
 export function Sidebar() {
   let { categories } = useSelector((state) => state.product);
@@ -15,7 +15,7 @@ export function Sidebar() {
     dispatch(getCategoriesAction());
   }, []);
 
-  let obj = convertToQueryToStr();
+  let obj = convertQueryToStr();
   // delete obj.page;
 
   const handleClickItemCategories = (item) => {
@@ -24,6 +24,8 @@ export function Sidebar() {
       payload: item,
     });
   };
+
+
 
   return (
     <div className="col-12 col-md-4 col-lg-3">
