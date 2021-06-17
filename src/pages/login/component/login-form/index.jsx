@@ -39,7 +39,7 @@ export function LoginForm() {
 		let inputError = check();
 		if (Object.keys(inputError).length === 0) {
 			dispatch(loginAction(form));
-			console.log(loginErr?.error);
+			console.log(form);
 		}
 	}
 

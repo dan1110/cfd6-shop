@@ -1,7 +1,11 @@
+import Api from '../core/Api';
 import { endpoint } from './config';
 const axios = require('axios');
 
 const authApi = {
+	makeLogin(data) {
+		return Api.post('login', data);
+	},
 	async refreshToken() {
 		let refreshToken = JSON.parse(localStorage.getItem('data'))?.token?.refreshToken;
 		let res = await fetch(`${endpoint}/elearning/v4/refresh-token`, {
@@ -18,17 +22,19 @@ const authApi = {
 		}
 		return true;
 	},
-	makeLogin(data) {
-		// return fetch(`${endpoint}/login`, {
-		// 	method: 'POST',
-		// 	body: JSON.stringify(data),
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// }).then((res) => res.json());
+	// makeLogin(data) {
+	//fetch api
+	// return fetch(`${endpoint}/login`, {
+	// 	method: 'POST',
+	// 	body: JSON.stringify(data),
+	// 	headers: {
+	// 		'Content-Type': 'application/json',
+	// 	},
+	// }).then((res) => res.json());
 
-		return axios.post(`${endpoint}/login`, data);
-	},
+	//axios api
+	// 	return axios.post(`${endpoint}/login`, data);
+	// },
 	register(data) {
 		return fetch(`${endpoint}/register`, {
 			method: 'POST',

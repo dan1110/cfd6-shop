@@ -5,20 +5,20 @@ export function loginAction(form) {
 	return async (dispatch) => {
 		let response = await authApi.makeLogin(form);
 
-		let res = response.data;
-
-		if (res?.data) {
-			dispatch({
-				type: LOGIN,
-				payload: res.data,
-			});
-		} else if (res?.error) {
-			console.log(res);
-			dispatch({
-				type: LOGIN_ERROR,
-				payload: res.error,
-			});
-		}
+		console.log('dô rồi nè', response);
+		// let res = response.data; 
+		// if (res?.data) {
+		// 	dispatch({
+		// 		type: LOGIN,
+		// 		payload: res.data,
+		// 	});
+		// } else if (res?.error) {
+		// 	console.log(res);
+		// 	dispatch({
+		// 		type: LOGIN_ERROR,
+		// 		payload: res.error,
+		// 	});
+		// }
 	};
 }
 export function registerAction(form) {
