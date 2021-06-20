@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { currency } from '../../utils';
+import '../../assets/custom.scss';
+import { decreaseProductAction, increaseProductAction, removeProductAction } from '../../redux/actions/cartAction';
 
 export function ModalShoppingCart() {
+	let [amountValue, setAmountValue] = useState();
+	let { listCart, priceTotal, amountCart } = useSelector((state) => state.cart);
+	let dispatch = useDispatch();
+
+	const handleDecreaseProduct = (item) => {
+		dispatch(decreaseProductAction(item));
+	};
+	const handleIncreaseProduct = (item) => {
+		dispatch(increaseProductAction(item));
+	};
+	const handleRemoveProduct = (item) => {
+		dispatch(removeProductAction(item));
+	};
+	const handleChangeAmount = (e) => {
+		// let name = e.target.name
+		// setAmountValue({
+			
+		// });
+	};
+
 	return ReactDOM.createPortal(
 		<div className="modal fixed-right fade" id="modalShoppingCart" tabIndex={-1} role="dialog" aria-hidden="true">
 			<div className="modal-dialog modal-dialog-vertical" role="document">
@@ -13,80 +37,83 @@ export function ModalShoppingCart() {
 					</button>
 					{/* Header*/}
 					<div className="modal-header line-height-fixed font-size-lg">
-						<strong className="mx-auto">Your Cart (2)</strong>
+						<strong className="mx-auto">Your Cart ({amountCart})</strong>
 					</div>
 					{/* List group */}
 					<ul className="list-group list-group-lg list-group-flush">
-						<li className="list-group-item">
-							<div className="row align-items-center">
-								<div className="col-4">
-									{/* Image */}
-									<a href="./product.html">
-										<img className="img-fluid" src="/img/products/product-6.jpg" alt="..." />
-									</a>
-								</div>
-								<div className="col-8">
-									{/* Title */}
-									<p className="font-size-sm font-weight-bold mb-6">
-										<a className="text-body" href="./product.html">
-											Cotton floral print Dress
-										</a>{' '}
-										<br />
-										<span className="text-muted">$40.00</span>
-									</p>
-									{/*Footer */}
-									<div className="d-flex align-items-center">
-										{/* Select */}
-										<select className="custom-select custom-select-xxs w-auto">
-											<option value={1}>1</option>
-											<option value={1}>2</option>
-											<option value={1}>3</option>
-										</select>
-										{/* Remove */}
-										<a className="font-size-xs text-gray-400 ml-auto" href="#!">
-											<i className="fe fe-x" /> Remove
-										</a>
+						{listCart.length === 0 ? (
+							<p>Giỏ hàng trống</p>
+						) : (
+							listCart.map((item) => (
+								<li className="list-group-item">
+									<div className="row align-items-center">
+										<div className="col-4">
+											{/* Image */}
+											<a href="./product.html">
+												<img className="img-fluid" src={item.thumbnail_url} alt="..." />
+											</a>
+										</div>
+										<div className="col-8">
+											{/* Title */}
+											<p className="font-size-sm font-weight-bold mb-6">
+												<a className="text-body" href="./product.html">
+													{item.name}
+												</a>{' '}
+												<br />
+												<span className="text-muted">{currency(item.price)}</span>
+											</p>
+											{/*Footer */}
+											<div className="d-flex align-items-center">
+												{/* Select */}
+												{/* <select className="custom-select custom-select-xxs w-auto">
+													<option value={1}>1</option>
+													<option value={1}>2</option>
+													<option value={1}>3</option>
+												</select> */}
+
+												{item.amountProduct > 1 && (
+													<button
+														className=" btn btn-decrease"
+														onClick={() => handleDecreaseProduct({ ...item })}
+													>
+														-
+													</button>
+												)}
+
+												<input
+													type="text"
+													className="input-amount custom-select custom-select-xxs w-auto"
+													value={item.amountProduct}
+													readOnly
+													// onChange={handleChangeAmount(item.amountProduct)}
+												/>
+												{/* Remove */}
+												<button
+													className="btn btn-increase"
+													onClick={() => handleIncreaseProduct({ ...item })}
+												>
+													+
+												</button>
+												<a
+													className="font-size-xs text-gray-400 ml-auto"
+													href="#!"
+													onClick={(e) => {
+														e.preventDefault();
+														handleRemoveProduct({ ...item });
+													}}
+												>
+													<i className="fe fe-x" /> Remove
+												</a>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-						</li>
-						<li className="list-group-item">
-							<div className="row align-items-center">
-								<div className="col-4">
-									{/* Image */}
-									<a href="./product.html">
-										<img className="img-fluid" src="/img/products/product-10.jpg" alt="..." />
-									</a>
-								</div>
-								<div className="col-8">
-									{/* Title */}
-									<p className="font-size-sm font-weight-bold mb-6">
-										<a className="text-body" href="./product.html">
-											Suede cross body Bag
-										</a>{' '}
-										<br />
-										<span className="text-muted">$49.00</span>
-									</p>
-									{/*Footer */}
-									<div className="d-flex align-items-center">
-										{/* Select */}
-										<select className="custom-select custom-select-xxs w-auto">
-											<option value={1}>1</option>
-											<option value={1}>2</option>
-											<option value={1}>3</option>
-										</select>
-										{/* Remove */}
-										<a className="font-size-xs text-gray-400 ml-auto" href="#!">
-											<i className="fe fe-x" /> Remove
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
+								</li>
+							))
+						)}
 					</ul>
 					{/* Footer */}
 					<div className="modal-footer line-height-fixed font-size-sm bg-light mt-auto">
-						<strong>Subtotal</strong> <strong className="ml-auto">$89.00</strong>
+						<strong>Subtotal</strong> <strong className="ml-auto">{currency(priceTotal)}</strong>
 					</div>
 					{/* Buttons */}
 					<div className="modal-body">
@@ -99,7 +126,7 @@ export function ModalShoppingCart() {
 					</div>
 				</div>
 				{/* Empty cart (remove `.d-none` to enable it) */}
-				<div className="modal-content d-none">
+				<div className="modal-content">
 					{/* Close */}
 					<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 						<i className="fe fe-x" aria-hidden="true" />

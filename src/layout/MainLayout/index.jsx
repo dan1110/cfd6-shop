@@ -1,4 +1,4 @@
-import { ModalNewH, ModalShoppingCart } from '../../components/Modal';
+import { ModalNewH, ModalProduct, ModalShoppingCart } from '../../components/Modal';
 import { Footer } from './Footer';
 import { Header } from './Header';
 const MainLayout = ({ children }) => {
@@ -6,6 +6,7 @@ const MainLayout = ({ children }) => {
 		<>
 			<ModalNewH />
 			<ModalShoppingCart />
+			<ModalProduct />
 			<Header />
 			{children}
 			<Footer />

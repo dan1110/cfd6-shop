@@ -1,8 +1,6 @@
 class Api {
 	endpoint = 'http://cfd-reactjs.herokuapp.com';
-	constructor(endpoint) {
-		this.endpoint = endpoint;
-	}
+
 	accessToken;
 	useToken = false;
 	token() {
@@ -35,13 +33,14 @@ class Api {
 		let headers = {
 			'Content-Type': 'application/json',
 		};
-		let accessToken = JSON.parse(localStorage.getItem('data')?.token?.accessToken);
-
+		// let accessToken = JSON.parse(localStorage.getItem('data')?.token?.accessToken);
 		if (this.useToken) {
-			headers.Authorization = `Bearer ${accessToken}`;
-		}
+			let token = JSON.parse(localStorage.getItem('data')?.token?.accessToken);
 
-		this.useToken = false;
+			if (token) {
+				headers.Authorization = `Bearer ${token}`;
+			}
+		}
 
 		return headers;
 	}
@@ -69,4 +68,4 @@ class Api {
 	}
 }
 
-export default new Api;
+export default new Api();

@@ -1,10 +1,12 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import AuthReducer from './reducer/authReducer';
+import CartReducer from './reducer/cartReducer';
 import ProductReducer from './reducer/productReducer';
 
 let reducer = combineReducers({
 	auth: AuthReducer,
 	product: ProductReducer,
+	cart: CartReducer,
 });
 
 const middleWare = (store) => (next) => (action) => {

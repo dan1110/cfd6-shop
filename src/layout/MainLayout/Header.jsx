@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 export const Header = () => {
 	let { login, data } = useSelector((state) => state.auth);
+	let { amountCart } = useSelector((state) => state.cart);
 	return (
 		<div>
 			<div className="navbar navbar-topbar navbar-expand-xl navbar-light bg-light">
@@ -188,9 +189,7 @@ export const Header = () => {
 							</li>
 							<li className="nav-item ml-lg-n4">
 								<Link to="/login" className="nav-link">
-									{login
-									 ? <i className="fas fa-info"></i> 
-									 : <i className="fe fe-user" />}
+									{login ? <i className="fas fa-info"></i> : <i className="fe fe-user" />}
 								</Link>
 							</li>
 							<li className="nav-item ml-lg-n4">
@@ -200,7 +199,7 @@ export const Header = () => {
 							</li>
 							<li className="nav-item ml-lg-n4">
 								<a className="nav-link" data-toggle="modal" href="#modalShoppingCart">
-									<span data-cart-items={2}>
+									<span data-cart-items={amountCart}>
 										<i className="fe fe-shopping-cart" />
 									</span>
 								</a>
