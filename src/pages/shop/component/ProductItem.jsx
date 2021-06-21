@@ -16,7 +16,7 @@ export function ProductItem(props) {
 		dispatch(getProductViewAction(props));
 	};
 	const handleCart = () => {
-		dispatch(addToCartAction({...props}));
+		dispatch(addToCartAction({ ...props }));
 	};
 
 	return (

@@ -1,14 +1,21 @@
-import { ADD_TO_CART, DECREASE_PRODUCT_CART, INCREASE_PRODUCT_CART, REMOVE_PRODUCT_CART } from './../type';
+import {
+	ADD_TO_CART,
+	DECREASE_PRODUCT_CART,
+	INCREASE_PRODUCT_CART,
+	REMOVE_PRODUCT_CART,
+	ADD_AMOUNT_PRODUCT,
+} from './../type';
 const initialState = {
-	listCart: [],
-	priceTotal: 0,
-	amountCart: 0,
+	listCart: JSON.parse(localStorage.getItem('listCart')) || [],
+	priceTotal: JSON.parse(localStorage.getItem('priceTotal')) || 0,
+	amountCart: JSON.parse(localStorage.getItem('amountCart')) || 0,
+	productItem: {},
 };
 
 export default function CartReducer(state = initialState, action) {
 	switch (action.type) {
 		case ADD_TO_CART: {
-			let { listCart, priceTotal, amountCart } = state;
+			let { listCart, priceTotal, amountCart, productItem } = state;
 			let cartItem = action.payload;
 			let amountProduct = cartItem.amountProduct || 1;
 			let index = listCart.findIndex((item) => item._id === action.payload._id);
@@ -27,6 +34,9 @@ export default function CartReducer(state = initialState, action) {
 				listCart[index].amountProduct += amountProduct;
 				priceTotal += listCart[index].price;
 			}
+			localStorage.setItem('listCart', JSON.stringify(listCart));
+			localStorage.setItem('priceTotal', JSON.stringify(priceTotal));
+			localStorage.setItem('amountCart', JSON.stringify(amountCart));
 
 			return {
 				...state,
@@ -39,11 +49,25 @@ export default function CartReducer(state = initialState, action) {
 			let { listCart, priceTotal, amountCart } = state;
 			let index = listCart.findIndex((item) => item._id === action.payload._id);
 
-			if (listCart[index].amountProduct > 1) {
-				listCart[index].amountProduct -= 1;
-				priceTotal -= listCart[index].price;
-				amountCart -= 1;
+			// if (listCart[index].amountProduct > 1) {
+			// 	listCart[index].amountProduct -= 1;
+			// 	priceTotal -= listCart[index].price;
+			// 	amountCart -= 1;
+			// } else if (listCart[index].amountProduct === 0) {
+			// 	listCart.splice(index, 1);
+			// }
+
+			//decrease product === 0 =>removess
+			amountCart -= 1;
+			priceTotal -= action.payload.price;
+			listCart[index].amountProduct -= 1;
+			if (listCart[index].amountProduct === 0) {
+				listCart.splice(index, 1);
 			}
+
+			localStorage.setItem('listCart', JSON.stringify(listCart));
+			localStorage.setItem('priceTotal', JSON.stringify(priceTotal));
+			localStorage.setItem('amountCart', JSON.stringify(amountCart));
 
 			return {
 				...state,
@@ -53,11 +77,16 @@ export default function CartReducer(state = initialState, action) {
 			};
 		}
 		case INCREASE_PRODUCT_CART: {
+			// listCart[index] là vị trí của sản phẩm thứ index
 			let { listCart, priceTotal, amountCart } = state;
 			let index = listCart.findIndex((item) => item._id === action.payload._id);
 			listCart[index].amountProduct += 1;
 			priceTotal += listCart[index].price;
 			amountCart += 1;
+
+			localStorage.setItem('listCart', JSON.stringify(listCart));
+			localStorage.setItem('priceTotal', JSON.stringify(priceTotal));
+			localStorage.setItem('amountCart', JSON.stringify(amountCart));
 
 			return {
 				...state,
@@ -72,13 +101,39 @@ export default function CartReducer(state = initialState, action) {
 			let newListCart = listCart.filter((item) => item._id !== action.payload._id);
 
 			let newAmount = listCart[index].amountProduct;
-			let newPrice = listCart[index].price;
+			let newPrice = priceTotal - listCart[index].price * newAmount;
+
+			localStorage.setItem('listCart', JSON.stringify(newListCart));
+			localStorage.setItem('priceTotal', JSON.stringify(newPrice));
+			localStorage.setItem('amountCart', JSON.stringify(amountCart - newAmount));
 
 			return {
 				...state,
 				listCart: newListCart,
-				priceTotal: priceTotal - newPrice,
+				priceTotal: newPrice,
 				amountCart: amountCart - newAmount,
+			};
+		}
+		case ADD_AMOUNT_PRODUCT: {
+			let { listCart, priceTotal, amountCart } = state;
+			let index = listCart.findIndex((item) => item._id === action.payload._id);
+			let newAmountProduct = action.payload.num;
+			amountCart -= listCart[index].amountProduct;
+			priceTotal -= listCart[index].price * listCart[index].amountProduct;
+
+			amountCart += newAmountProduct;
+			priceTotal += listCart[index].price * newAmountProduct;
+
+			listCart[index].amountProduct = newAmountProduct;
+
+			localStorage.setItem('listCart', JSON.stringify(listCart));
+			localStorage.setItem('priceTotal', JSON.stringify(priceTotal));
+			localStorage.setItem('amountCart', JSON.stringify(amountCart));
+			return {
+				...state,
+				listCart,
+				priceTotal,
+				amountCart,
 			};
 		}
 		default:

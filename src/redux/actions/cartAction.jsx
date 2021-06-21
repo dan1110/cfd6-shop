@@ -1,4 +1,4 @@
-import { ADD_TO_CART, DECREASE_PRODUCT_CART, INCREASE_PRODUCT_CART, REMOVE_PRODUCT_CART } from '../type';
+import { ADD_TO_CART, DECREASE_PRODUCT_CART, INCREASE_PRODUCT_CART, REMOVE_PRODUCT_CART, ADD_AMOUNT_PRODUCT } from '../type';
 
 export function addToCartAction(cartItem) {
 	return {
@@ -22,5 +22,11 @@ export function removeProductAction(cartItem) {
 	return {
 		type: REMOVE_PRODUCT_CART,
 		payload: cartItem,
+	};
+}
+export function addAmountProduct(data) {
+	return {
+		type: ADD_AMOUNT_PRODUCT,
+		payload: data,
 	};
 }
