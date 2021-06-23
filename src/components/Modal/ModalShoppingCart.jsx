@@ -113,7 +113,7 @@ export default function Cart(item) {
 					<p className="font-size-sm font-weight-bold mb-6">
 						<a className="text-body" href="./product.html">
 							{item.name}
-						</a>{' '}
+						</a>
 						<br />
 						<span className="text-muted">{currency(item.price)}</span>
 					</p>

@@ -8,10 +8,19 @@
 .custom-select {
 	background: none !important;
 }
-.btn-increase, .btn-decrease {
+.btn-increase,
+.btn-decrease {
 	padding: 5px 8px;
 }
-.input-amount{
+.input-amount {
 	width: 145px !important;
-    padding: 8px;
+	padding: 8px;
+}
+
+.store-locator {
+	.simplebar-wrapper,
+	.simplebar-track.simplebar-horizontal,
+	.simplebar-track.simplebar-vertical {
+		display: none;
+	}
 }
